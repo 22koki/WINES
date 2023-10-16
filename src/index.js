@@ -50,3 +50,28 @@ getCocktailButton.addEventListener("click", () => {
             });
     }
 });
+const fetch = require('node-fetch');
+const fs = require('fs');
+
+async function downloadCocktailImages() {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail');
+    const data = await response.json();
+
+    if (data.drinks) {
+        for (const cocktail of data.drinks) {
+            const imageUrl = cocktail.strDrinkThumb;
+            const imageName = `images/${cocktail.strDrink}.jpg`;
+
+            const imageResponse = await fetch(imageUrl);
+            const buffer = await imageResponse.buffer();
+
+            fs.writeFileSync(imageName, buffer);
+            console.log(`Downloaded: ${imageName}`);
+        }
+    }
+}
+
+downloadCocktailImages();
+// Update this line to set the src attribute to the local image path
+cocktailImage.src = `images/${drink.strDrink}.jpg`;
+
