@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/styles.css" rel="stylesheet">
-    <title>Wines</title>
+    <title>Cocktail Database</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-    <nav>
-        
-        <label class="logo">
-            <img src="cork-and-vine-logo-zip-file/png/logo-color.png" alt="Your logo">
-        </label>
-            <i class="fa fa-braille" aria-hidden="true"></i>
-            Cork & Vine</label>
-            <ul>
-                <li><a class="active" href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Product</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact us</a></li>
+    <h1>Cocktail and Vine</h1>
+    <link rel="shortcut icon" href="cork-and-vine-logo-zip-file/png/logo-color.png">
+    <link rel="banner" href="cork-and-vine-logo-zip-file/png/red-wine-bottle-glass-ripe-260nw-754541119.webp">
+    
 
-            </ul>
-            <div class="search-container">
-                <form action="/search">
-                   <input type="text" placeholder="Search.." name="query">
-                   <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-               </div>
-    </nav>
+    <div class="cocktail-container">
+        <select id="cocktailSelect">
+            <option value="">Select a cocktail</option>
+        </select>
+        <button id="getCocktailButton">Get Cocktail</button>
+    </div>
+
+    <div id="cocktailDetails" class="hidden">
+        <h2 id="cocktailName"></h2>
+        <img id="cocktailImage" src="" alt="Cocktail Image">
+        <p id="cocktailInstructions"></p>
+        <ul id="cocktailIngredients"></ul>
+    </div>
 
     <script src="src/index.js"></script>
 </body>
