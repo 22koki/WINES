@@ -50,28 +50,32 @@ getCocktailButton.addEventListener("click", () => {
             });
     }
 });
-const fetch = require('node-fetch');
-const fs = require('fs');
+function fetchCocktailDetails(cocktailId) {
+  const apiEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailId}`;
 
-async function downloadCocktailImages() {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail');
-    const data = await response.json();
-
-    if (data.drinks) {
-        for (const cocktail of data.drinks) {
-            const imageUrl = cocktail.strDrinkThumb;
-            const imageName = `images/${cocktail.strDrink}.jpg`;
-
-            const imageResponse = await fetch(imageUrl);
-            const buffer = await imageResponse.buffer();
-
-            fs.writeFileSync(imageName, buffer);
-            console.log(`Downloaded: ${imageName}`);
-        }
-    }
+  return fetch(apiEndpoint)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error("Network response was not ok");
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.drinks && data.drinks.length > 0) {
+              return data.drinks[0];
+          } else {
+              throw new Error("Cocktail not found");
+          }
+      });
 }
 
-downloadCocktailImages();
-// Update this line to set the src attribute to the local image path
-cocktailImage.src = `images/${drink.strDrink}.jpg`;
-
+// Example of using the fetchCocktailDetails function
+const cocktailId = "11007"; // Replace with the ID of the cocktail you want to fetch
+fetchCocktailDetails(cocktailId)
+  .then(cocktail => {
+      // Process the cocktail data here
+      console.log(cocktail);
+  })
+  .catch(error => {
+      console.error(error);
+  });
